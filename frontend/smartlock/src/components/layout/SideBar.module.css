@@ -1,0 +1,46 @@
+/* Ajustando para que a sidebar comece logo abaixo da navbar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 125px; /* Altura da navbar */
+    width: 250px;
+    height: calc(100% - 125px); /* Altura total menos a altura da navbar */
+    background-color: #333;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin: 20px 0;
+  }
+  
+  .sidebar ul li p {
+    color: white;
+    font-weight: bold;
+  }
+  
+  .sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    transition: background-color 0.3s;
+  }
+  
+  .sidebar ul li a:hover {
+    background-color: #575757;
+  }
+  
+  /* Adiciona margem ao conteúdo principal para não ficar sobre a sidebar */
+  .container {
+    margin-left: 250px;
+    padding: 20px;
+  }
+  
