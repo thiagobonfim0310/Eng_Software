@@ -1,0 +1,39 @@
+.profile-container {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espaçamento entre cada elemento */
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.profile-item {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-weight: bold;
+  border-bottom: 2px solid #333;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-transform: uppercase; /* Deixar o texto em caixa alta */
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.profile-item {
+  font-size: 16px;
+}
