@@ -1,4 +1,4 @@
-import {  BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
+import {  BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 import Dashboard from "./components/pages/Dashboard";
 import Historico from "./components/pages/Historico";

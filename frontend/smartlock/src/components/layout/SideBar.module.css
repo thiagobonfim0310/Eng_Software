@@ -1,46 +1,101 @@
-/* Ajustando para que a sidebar comece logo abaixo da navbar */
+/* SideBar.module.css */
+
+/* Estilos básicos para a sidebar */
 .sidebar {
-    position: fixed;
-    left: 0;
-    top: 125px; /* Altura da navbar */
     width: 250px;
-    height: calc(100% - 125px); /* Altura total menos a altura da navbar */
-    background-color: #333;
-    padding-top: 20px;
+    height: calc(100vh - 60px); /* Altura da sidebar ajustada para não cobrir a navbar */
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 20px 10px;
+    position: fixed; /* Sidebar continua fixa na tela */
+    top: 60px; /* A sidebar começa logo abaixo da navbar */
+    left: 0;
+    z-index: 100; /* Valor de z-index menor ou igual ao da navbar */
+    transition: 0.3s ease;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 15px 0;
+  color: black; /* Cor do texto */
+  font-size: 18px;
+}
+
+.sidebar li p {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: black; /* Cor do texto para o título 'Usuário' */
+}
+
+/* Estilo para os itens do menu */
+.side-text {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  cursor: pointer; /* Adicionado para imitar 'Perfil' e 'Configurações' */
+  color: #bbbbbb; /* Mesma cor de 'Perfil' e 'Configurações' */
+}
+
+.side-text:hover {
+  background-color: #bbbbbb; /* Cor ao passar o mouse */
+}
+
+.side-text span {
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+/* Link estilizado */
+.sidebar a {
+  text-decoration: none;
+  color: inherit; /* Herdar a cor da classe 'side-text' */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s ease; /* Transição para o hover */
+}
+
+.sidebar a:hover {
+  background-color: #bbbbbb; /* Aplicar o efeito hover ao link */
+}
+
+/* Estilo para o texto de "Perfil" e "Configurações" */
+.sidebar li:last-child,
+.sidebar li:nth-last-child(2) {
+  cursor: pointer;
+  color: black;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar li:last-child:hover,
+.sidebar li:nth-last-child(2):hover {
+  background-color: #bbbbbb; /* Cor ao passar o mouse */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .sidebar {
+      width: 200px;
   }
   
-  .sidebar ul {
-    list-style-type: none;
-    padding: 0;
+  .side-text span {
+      font-size: 14px;
   }
-  
-  .sidebar ul li {
-    margin: 20px 0;
+
+  .sidebar li {
+      font-size: 16px;
   }
-  
-  .sidebar ul li p {
-    color: white;
-    font-weight: bold;
-  }
-  
-  .sidebar ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    display: block;
-    transition: background-color 0.3s;
-  }
-  
-  .sidebar ul li a:hover {
-    background-color: #575757;
-  }
-  
-  /* Adiciona margem ao conteúdo principal para não ficar sobre a sidebar */
-  .container {
-    margin-left: 250px;
-    padding: 20px;
-  }
-  
+}
