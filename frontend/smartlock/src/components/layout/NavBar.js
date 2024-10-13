@@ -7,11 +7,17 @@ import { CiSearch } from "react-icons/ci";
 function NavBar(){
     return(
         <nav className={styles.navbar}>
-            <img src={logo} alt="AccessMind"></img>
-            <h1>AccessMind</h1>
-            <CiSearch />
-            <input name="search" defaultValue="Pesquisar..."/>
-            <IoMdNotificationsOutline />
+            <div className={styles.logo}>
+                <img src={logo} alt="AccessMind"></img>
+                <h1>AccessMind</h1>
+            </div>
+            <div className={styles.search}>
+                <CiSearch />
+                <input type="search" placeholder="Pesquisar..."/>
+            </div>
+            <div className={styles.notification}>
+                <IoMdNotificationsOutline />
+            </div>
         </nav>
     )
 }
