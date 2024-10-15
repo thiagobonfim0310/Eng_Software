@@ -1,0 +1,14 @@
+.adicionar_botao {
+  background-color: #4a4aff; /* Fundo azul */
+  color: white; /* Texto branco */
+  padding: 10px 20px; /* Espaçamento interno do botão */
+  border: none; /* Sem bordas */
+  border-radius: 5px; /* Cantos arredondados */
+  cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+  font-size: 16px; /* Tamanho da fonte */
+  position: absolute; /* Posicionamento absoluto */
+  right: 20px; /* Posicionado a 20px da direita */
+  top: 20px; /* Posicionado a 20px do topo */
+  margin-top: 80px; /* Margem superior */
+  margin-left: 270px; /* Margem esquerda */
+}
