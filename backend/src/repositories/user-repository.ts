@@ -10,4 +10,10 @@ export class UserRepository {
     const users = await prisma.user.findMany();
     return users;
   }
+  // async findById(id: number) {
+  //   const user = await prisma.user.findUnique({ where: { id } });
+  //   return user;
+  // }
+
+  // async delete(id: number) {
 }

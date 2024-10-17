@@ -4,9 +4,9 @@ import { UserRepository } from "../repositories/user-repository";
 import { UserService } from "../services/user-services";
 
 export async function userRoutes(app: FastifyInstance) {
+  const userRepository = new UserRepository();
+  const userService = new UserService(userRepository);
   app.get("/", async (request, reply) => {
-    const userRepository = new UserRepository();
-    const userService = new UserService(userRepository);
     try {
       const users = await userService.listAll();
       return reply.code(200).send(users);
@@ -22,8 +22,7 @@ export async function userRoutes(app: FastifyInstance) {
       cpf: z.string(),
     });
     const { name, tag, cpf } = registerBodySchema.parse(request.body);
-    const userRepository = new UserRepository();
-    const userService = new UserService(userRepository);
+
     try {
       await userService.register({ name, tag, cpf });
     } catch (e) {
@@ -31,4 +30,8 @@ export async function userRoutes(app: FastifyInstance) {
     }
     return reply.code(201).send();
   });
+
+  //app.get("/:id", async (request, reply) => {
+  // app.put("/:id", async (request, reply) => {
+  //app.delete("/:id", async (request, reply) => {
 }

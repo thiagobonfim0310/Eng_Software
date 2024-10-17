@@ -15,4 +15,12 @@ export class UserService {
   async listAll() {
     return await this.userRepository.findAll();
   }
+
+  // async findById(id: number) {
+  //   return await this.userRepository.findById(id);
+  // }
+
+  // async update({ id, name, tag, cpf }: User) {
+
+  //async delete(id: number) {
 }

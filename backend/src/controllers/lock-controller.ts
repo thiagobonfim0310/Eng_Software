@@ -4,9 +4,9 @@ import { LockService } from "../services/lock-service";
 import { z } from "zod";
 
 export async function lockRoutes(app: FastifyInstance) {
+  const lockRepository = new LockRepository();
+  const lockService = new LockService(lockRepository);
   app.get("/", async (request, reply) => {
-    const lockRepository = new LockRepository();
-    const lockService = new LockService(lockRepository);
     try {
       const locks = await lockService.listAll();
       return reply.code(200).send(locks);
@@ -20,8 +20,7 @@ export async function lockRoutes(app: FastifyInstance) {
       name: z.string(),
     });
     const { name } = registerBodySchema.parse(request.body);
-    const lockRepository = new LockRepository();
-    const lockService = new LockService(lockRepository);
+
     try {
       await lockService.register({ name });
     } catch (e) {
