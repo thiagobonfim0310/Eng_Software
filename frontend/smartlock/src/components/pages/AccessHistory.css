@@ -1,0 +1,25 @@
+/* Ainda falta colocar na posição certa */
+.access-history-container {
+  width: 100%;
+  padding: 20px;
+}
+
+.access-history-header,
+.access-history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.access-history-header {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.access-history-item span,
+.access-history-header span {
+  flex: 1; /* Permite que os itens cresçam de maneira uniforme */
+  text-align: center; /* Centraliza o texto em cada coluna */
+}
