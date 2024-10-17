@@ -1,0 +1,17 @@
+[
+  { "titulo": "Nível 1", "portas": ["Porta 1", "Porta 2"] },
+  { "titulo": "Nível 2", "portas": ["Porta 1", "Porta 2", "Porta 3"] },
+  {
+    "titulo": "Nível 3",
+    "portas": ["Porta 1", "Porta 2", "Porta 3", "Porta 4"]
+  },
+  {
+    "titulo": "Nível 4",
+    "portas": ["Porta 1", "Porta 2", "Porta 3", "Porta 4", "Porta 5"]
+  },
+  { "titulo": "Visitante", "portas": ["Porta 1"] },
+  {
+    "titulo": "Nível 5",
+    "portas": ["Porta 1", "Porta 2", "Porta 3", "Porta 4", "Porta 5", "Porta 6"]
+  }
+]
