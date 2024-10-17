@@ -2,3 +2,7 @@
     margin-top: 80px;
     margin-left: 270px;
 }
+
+.conteudo_conteiner{
+    display: grid;
+}

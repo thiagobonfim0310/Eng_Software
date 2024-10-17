@@ -1,4 +1,10 @@
 .dashboard_container{
     margin-top: 80px;
     margin-left: 270px;
+    display: flex;
+    flex-direction: row;
+}
+
+.conteudo_conteiner{
+    margin-top: 90px;
 }
