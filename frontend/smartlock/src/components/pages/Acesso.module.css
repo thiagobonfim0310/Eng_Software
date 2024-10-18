@@ -4,5 +4,21 @@
 }
 
 .conteudo_conteiner{
-    display: grid;
+    
+}
+
+.conteudo_conteiner ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.titulo {
+    font-size: 18px;
+    color: black;
+    font-weight: bold;
+}
+
+.texto p {
+    font-size: 16px;
+    color: black;
 }

@@ -1,20 +1,63 @@
-import QuadroInf from "../layout/QuadroInf"
-import styles from "./Acesso.module.css"
+import QuadroInf from "../layout/QuadroInf";
+import styles from "./Acesso.module.css";
 
-function Acesso(){
-    return(
-        <section className={styles.acesso_container}> 
+function Acesso() {
+    const nvl1 = ['Acesso total'];
+    const nvl2 = ['Porta principal', 'Sala 1', 'Sala 2', 'Lab 1', 'Lab 2'];
+    const nvl3 = ['Porta principal', 'Sala 1', 'Sala 2', 'Lab 1'];
+    const nvl4 = ['Porta principal', 'Sala 1', 'Lab 1'];
+    const visi = ['Porta principal'];
+
+    return (
+        <section className={styles.acesso_container}>
             <h1>Acesso</h1>
 
             <div className={styles.conteudo_conteiner}>
-                <QuadroInf titulo="Nível 1" dados="adkjflkjdhf"/>
-                <QuadroInf titulo="Nível 2" dados="adkjflkjdhf"/>
-                <QuadroInf titulo="Nível 3" dados="adkjflkjdhf"/>
-                <QuadroInf titulo="Nível 4" dados="adkjflkjdhf"/>
-                <QuadroInf titulo="Visitante" dados="adkjflkjdhf"/>
+                <ul>
+                    <li>
+                        <QuadroInf 
+                            titulo="Nível 1" 
+                            dado={nvl1} 
+                            tituloClassName={styles.titulo} 
+                            textoClassName={styles.texto} 
+                        />
+                    </li>
+                    <li>
+                        <QuadroInf 
+                            titulo="Nível 2" 
+                            dado={nvl2} 
+                            tituloClassName={styles.titulo} 
+                            textoClassName={styles.texto} 
+                        />
+                    </li>
+                    <li>
+                        <QuadroInf 
+                            titulo="Nível 3" 
+                            dado={nvl3} 
+                            tituloClassName={styles.titulo} 
+                            textoClassName={styles.texto} 
+                        />
+                    </li>
+                    <li>
+                        <QuadroInf 
+                            titulo="Nível 4" 
+                            dado={nvl4} 
+                            tituloClassName={styles.titulo} 
+                            textoClassName={styles.texto} 
+                        />
+                    </li>
+                    <li>
+                        <QuadroInf 
+                            titulo="Visitante" 
+                            dado={visi} 
+                            tituloClassName={styles.titulo} 
+                            textoClassName={styles.texto} 
+                        />
+                    </li>
+                </ul>
             </div>
         </section>
-    )
+    );
 }
 
-export default Acesso
+export default Acesso;
