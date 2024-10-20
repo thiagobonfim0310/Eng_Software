@@ -1,0 +1,26 @@
+.dashboard_container{
+    margin-top: 80px;
+    margin-left: 270px;
+    display: flex;
+    flex-direction: row;
+}
+
+.conteudo_conteiner{
+    margin-top: 90px;
+}
+
+.conteudo_conteiner ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.titulo {
+    font-size: 16px;
+    color: black;
+}
+
+.texto {
+    font-size: 18px;
+    color: black;
+    font-weight: bold;
+}

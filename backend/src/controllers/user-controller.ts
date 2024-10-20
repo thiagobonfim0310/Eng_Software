@@ -9,8 +9,10 @@ export async function userRoutes(app: FastifyInstance) {
   app.get("/", async (request, reply) => {
     try {
       const users = await userService.listAll();
+      console.log("Usuários retornados:", users); // Adicione um log aqui
       return reply.code(200).send(users);
     } catch (e) {
+      console.error("Erro ao listar usuários:", e); // Log do erro
       return reply.status(405).send();
     }
   });

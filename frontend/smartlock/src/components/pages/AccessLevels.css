@@ -1,0 +1,35 @@
+/* Falta colocar na posição certa */
+.access-levels-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+}
+
+.access-level-item {
+  background-color: #d3d3d3;
+  color: black;
+  padding: 20px;
+  border-radius: 10px; /* Pontas arredondadas */
+  text-align: center; /* Centraliza o texto */
+  flex: 1 0 21%; /* Faz com que as caixas ocupem 21% do espaço disponível, permitindo 4 por linha */
+}
+
+.level-title {
+  font-weight: bold; /* Título em negrito */
+  text-align: justify; /* Texto justificado */
+}
+
+.access-text {
+  color: purple;
+  margin-top: 10px;
+  text-align: justify; /* Texto justificado */
+}
+
+.access-list {
+  color: black; /* Lista em preto */
+  text-align: left; /* Alinhamento à esquerda da lista */
+  margin-top: 0; /* Remove margem superior */
+  padding-left: 20px; /* Ajusta o alinhamento da lista */
+  list-style: none;
+}

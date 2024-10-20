@@ -1,0 +1,11 @@
+.cabecalho{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 20px; 
+}
+
+.permissoes_container{
+    margin-top: 80px;
+    margin-left: 270px;
+}

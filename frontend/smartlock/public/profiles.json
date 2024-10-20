@@ -1,0 +1,26 @@
+[
+  {
+    "nome": "Sheldon Cooper",
+    "nivel": "2",
+    "tipo": "Temporario",
+    "data": "Mar 23, 2024"
+  },
+  {
+    "nome": "João Silva",
+    "nivel": "1",
+    "tipo": "Permanente",
+    "data": "Mar 23, 2024"
+  },
+  {
+    "nome": "Helena Santos",
+    "nivel": "3",
+    "tipo": "Permanente",
+    "data": "Mar 23, 2022"
+  },
+  {
+    "nome": "Felipe Donato",
+    "nivel": "4",
+    "tipo": "Permanente",
+    "data": "Mar 23, 2022"
+  }
+]

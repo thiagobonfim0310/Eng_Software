@@ -1,0 +1,31 @@
+.cabecalho{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 20px; 
+}
+
+.acesso_container{
+    margin-top: 80px;
+    margin-left: 270px;
+}
+
+.conteudo_conteiner{
+    
+}
+
+.conteudo_conteiner ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.titulo {
+    font-size: 18px;
+    color: black;
+    font-weight: bold;
+}
+
+.texto p {
+    font-size: 16px;
+    color: black;
+}

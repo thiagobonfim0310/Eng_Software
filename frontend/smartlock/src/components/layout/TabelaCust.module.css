@@ -1,0 +1,36 @@
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+    text-align: left;
+  }
+  
+  .tabela th, 
+  .tabela td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .tabela th {
+    background-color: #f7f7f7;
+    color: black;
+  }
+  
+  .tabela tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .tabela tr:hover {
+    background-color: #ddd;
+  }
+  
+  .tabela td {
+    text-align: left; 
+  }
+  
+  .tabela caption {
+    font-size: 1.5em;
+    margin: 10px;
+  }
+  

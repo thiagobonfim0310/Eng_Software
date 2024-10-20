@@ -1,0 +1,95 @@
+/* SideBar.module.css */
+
+/* Estilos básicos para a sidebar */
+.sidebar {
+    width: 250px;
+    height: calc(100vh - 60px); /* Altura da sidebar ajustada para não cobrir a navbar */
+    background-color: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 10px;
+    position: fixed; /* Sidebar continua fixa na tela */
+    top: 60px; /* A sidebar começa logo abaixo da navbar */
+    left: 0;
+    z-index: 100; /* Valor de z-index menor ou igual ao da navbar */
+    transition: 0.3s ease;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-right: #e8e8e8;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 15px 0;
+  color: black; /* Cor do texto */
+  font-size: 18px;
+}
+
+/* Estilo para os itens do menu */
+.side-text {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  cursor: pointer; /* Adicionado para imitar 'Perfil' e 'Configurações' */
+  color: #bbbbbb; /*Mesma cor de 'Perfil' e 'Configurações'*/ 
+}
+
+.side-text:hover {
+  background-color: #bbbbbb; /* Cor ao passar o mouse */
+}
+
+.side-text span {
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+/* Link estilizado */
+.sidebar a {
+  text-decoration: none;
+  color: inherit; /* Herdar a cor da classe 'side-text' */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s ease; /* Transição para o hover */
+}
+
+/* .sidebar a:hover {
+  background-color: #ee7676;
+} */
+
+/* Estilo para o texto de "Perfil" e "Configurações" */
+.sidebar li:last-child,
+.sidebar li:nth-last-child(2) {
+  cursor: pointer;
+  color: black;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar li:last-child:hover,
+.sidebar li:nth-last-child(2):hover {
+  background-color: #bbbbbb; /* Cor ao passar o mouse */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .sidebar {
+      width: 200px;
+  }
+  
+  .side-text span {
+      font-size: 14px;
+  }
+
+  .sidebar li {
+      font-size: 16px;
+  }
+}
