@@ -1,4 +1,6 @@
 import TabelaCust from "../layout/TabelaCust";
+import Adicionar from "./Adicionar"
+
 import styles from "./Permissoes.module.css"
 
 function Permissoes(){
@@ -19,7 +21,10 @@ function Permissoes(){
 
     return(
         <section className={styles.permissoes_container}> 
-            <h1>Permissões</h1>
+            <div className={styles.cabecalho}>
+                <h1>Permissões</h1>
+                <Adicionar/>
+            </div>
 
             <div className={styles.conteudo_container}>
                 <TabelaCust columns={columns} data={data}/>

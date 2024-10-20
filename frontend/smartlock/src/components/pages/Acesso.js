@@ -1,4 +1,6 @@
 import QuadroInf from "../layout/QuadroInf";
+import Adicionar from "./Adicionar"
+
 import styles from "./Acesso.module.css";
 
 function Acesso() {
@@ -10,7 +12,10 @@ function Acesso() {
 
     return (
         <section className={styles.acesso_container}>
-            <h1>Acesso</h1>
+            <div className={styles.cabecalho}>
+                <h1>Acesso</h1>
+                <Adicionar/>
+            </div>
 
             <div className={styles.conteudo_conteiner}>
                 <ul>

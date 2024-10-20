@@ -1,4 +1,4 @@
-import {  BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 
 import Dashboard from "./components/pages/Dashboard";
 import Historico from "./components/pages/Historico";
@@ -19,6 +19,8 @@ function App() {
         <Route path="/historico" element={<Historico/>}/>
         <Route path="/permissoes" element={<Permissoes/>}/>
         <Route path="/acesso" element={<Acesso/>}/>
+        
+        <Route path="/" element={<Navigate to="/dashboard" />} />
       </Routes>
 
     </Router>
