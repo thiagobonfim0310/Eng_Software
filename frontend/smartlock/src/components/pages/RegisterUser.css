@@ -1,0 +1,40 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Altura da tela inteira */
+}
+
+.register-form {
+  background-color: #f7f7f7; /* Fundo claro para destaque */
+  padding: 20px;
+  border-radius: 10px; /* Pontas arredondadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+  max-width: 400px; /* Limite de largura para o formulário */
+  width: 100%; /* Garante que o formulário não ultrapasse a largura definida */
+  margin: auto; /* Centraliza horizontalmente */
+}
+
+.register-form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.register-form input {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px; /* Pontas arredondadas */
+  border: 1px solid #ccc;
+}
+
+.register-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4a4aff; /* Fundo azul */
+  color: white;
+  border: none;
+  border-radius: 5px; /* Pontas arredondadas */
+  cursor: pointer;
+}

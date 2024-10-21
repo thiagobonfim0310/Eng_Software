@@ -1,6 +1,8 @@
+// Função quebrada
+
 import React, { useState } from "react";
 import "./AdicionarBotao.css"; // Importe o novo CSS
-import Registro from "./Registro"; // Importe o novo componente
+import Registro from "./RegisterUser"; // Importe o novo componente
 
 function Adicionar() {
   const [showInput, setShowInput] = useState(false);
