@@ -14,4 +14,10 @@ export class EnvironmentService {
   async listAll() {
     return await this.environmentRepository.findAll();
   }
+
+  
+
+  async deleteById(id: string) {
+    return await this.environmentRepository.deleteById(id);
+  }
 }

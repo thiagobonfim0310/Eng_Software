@@ -10,4 +10,7 @@ export class LockRepository {
     const locks = await prisma.lock.findMany();
     return locks;
   }
+  async deleteById(id: string) {
+    return await prisma.lock.delete({ where: { id } });
+  }
 }
