@@ -10,13 +10,23 @@
     margin-left: 270px;
 }
 
-.conteudo_conteiner{
-    
+.conteudo_conteiner ul{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Três colunas de tamanhos iguais */
+    gap: 20px; /* Espaçamento entre os itens */
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
 }
 
-.conteudo_conteiner ul {
-    list-style-type: none;
-    padding: 0;
+.conteudo_conteiner li {
+    padding: 15px;
+    margin-bottom: 20px;
+    flex: 1 1 calc(33.333% - 20px); 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
 }
 
 .titulo {
@@ -29,3 +39,110 @@
     font-size: 16px;
     color: black;
 }
+
+/* Estilo para o container principal do modal */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo transparente escuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo para o conteúdo do modal */
+.modal_content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Estilo para o botão de fechar o modal */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.close:hover {
+    color: #333;
+}
+
+/* Estilo para os inputs dentro do modal */
+.modal_content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Estilo para o botão de ação do modal */
+.modal_content button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.modal_content button:hover {
+    background-color: #45a049;
+}
+
+/* Animação de entrada suave */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.quadro_inf_container {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.quadro_content {
+    position: relative;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    width: 200px;
+    text-align: center;
+}
+
+.edit_button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit_button:hover {
+    background-color: #0056b3;
+}
+
