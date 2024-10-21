@@ -55,6 +55,43 @@ export async function userRoutes(app: FastifyInstance) {
     }
   });
 
+  app.put("/:cpf/level", async (request, reply) => {
+    const { cpf } = request.params as { cpf: string };
+    const updateBodySchema = z.object({
+      levelId: z.string(),
+    });
+  
+    const { levelId } = updateBodySchema.parse(request.body);
+  
+    try {
+      const updatedUser = await userService.updateUserLevel(cpf, levelId);
+      if (updatedUser) {
+        return reply.code(200).send({ message: "Level do usuário atualizado com sucesso." });
+      } else {
+        return reply.status(404).send({ error: "Usuário não encontrado." });
+      }
+    } catch (e) {
+      console.error("Erro ao atualizar level do usuário:", e);
+      return reply.status(500).send({ error: "Erro interno no servidor." });
+    }
+  });
+
+  app.delete("/:cpf/environments/:environmentId", async (request, reply) => {
+    const { cpf, environmentId } = request.params as { cpf: string; environmentId: string };
+  
+    try {
+      const result = await userService.removeUserEnvironment(cpf, environmentId);
+      if (result) {
+        return reply.code(200).send({ message: "Ambiente removido do usuário com sucesso." });
+      } else {
+        return reply.status(404).send({ error: "Associação não encontrada ou usuário inexistente." });
+      }
+    } catch (e) {
+      console.error("Erro ao remover ambiente do usuário:", e);
+      return reply.status(500).send({ error: "Erro interno no servidor." });
+    }
+  });
+
   // Rota DELETE que recebe o CPF no corpo da requisição
   app.delete("/:cpf", async (request, reply) => {
     const { cpf } = request.params as { cpf: string }; // Captura do CPF via path params
