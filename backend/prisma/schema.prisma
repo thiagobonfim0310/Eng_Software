@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,13 +8,15 @@ datasource db {
 }
 
 model User {
-  id          String             @id @default(uuid())
-  name        String
-  cpf         String             @unique
-  tag         String             @unique
-  createdAt   DateTime           @default(now())
+  id        String   @id @default(uuid())
+  name      String
+  cpf       String   @unique
+  tag       String   @unique
+  createdAt DateTime @default(now())
+  levelId   String?  // Chave estrangeira para Level
+  level     Level?   @relation(fields: [levelId], references: [id], onDelete: SetNull)
   environments EnvironmentUser[]  
-  checkIns CheckIn[]
+  checkIns  CheckIn[]
 }
 
 model Environment {
@@ -32,14 +28,23 @@ model Environment {
   subEnvironments Environment[]      @relation("SubEnvironments")
   users           EnvironmentUser[]  
   lock            Lock?      
-  checkIns CheckIn[]        
+  checkIns        CheckIn[]    
+  levelRelations  LevelEnvironment[]  
+}
+
+model Level {
+  id          String   @id @default(uuid())
+  name        String
+  createdAt   DateTime @default(now())
+  users       User[]   // Relacionamento inverso com User
+  environments LevelEnvironment[]
 }
 
 model EnvironmentUser {
   userId        String
   environmentId String
-  user          User        @relation(fields: [userId], references: [id])
-  environment   Environment @relation(fields: [environmentId], references: [id])
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  environment   Environment @relation(fields: [environmentId], references: [id], onDelete: Cascade)
 
   @@id([userId, environmentId])  
 }
@@ -48,19 +53,29 @@ model Lock {
   id            String      @id @default(uuid())
   name          String
   createdAt     DateTime    @default(now())
-  environmentId String?      @unique
+  environmentId String?     @unique
   environment   Environment? @relation(fields: [environmentId], references: [id])
 }
 
 model CheckIn {
-  id String @id @default(uuid())
-  createdAt DateTime @default(now())
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
   validated_at DateTime?
   
-  user User? @relation(fields: [user_id], references: [id])
-  user_id String?
+  user         User? @relation(fields: [user_id], references: [id])
+  user_id      String?
 
-  environment Environment @relation(fields: [environment_id], references: [id])
+  environment  Environment @relation(fields: [environment_id], references: [id])
   environment_id String
+
   @@map("check_ins")
+}
+
+model LevelEnvironment {
+  levelId       String
+  environmentId String
+  level         Level        @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  environment   Environment  @relation(fields: [environmentId], references: [id], onDelete: Cascade)
+
+  @@id([levelId, environmentId])
 }

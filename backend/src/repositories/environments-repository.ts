@@ -10,4 +10,9 @@ export class EnvironmentRepository {
     const environments = await prisma.environment.findMany();
     return environments;
   }
+
+  
+  async deleteById(id: string) {
+    return await prisma.environment.delete({ where: { id } });
+  }
 }

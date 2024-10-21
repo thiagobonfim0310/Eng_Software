@@ -28,4 +28,20 @@ export async function lockRoutes(app: FastifyInstance) {
     }
     return reply.code(201).send();
   });
+
+  app.delete("/:id", async (request, reply) => {
+    const { id } = request.params as { id: string };
+
+    try {
+      const deletedLock = await lockService.deleteById(id);
+      if (deletedLock) {
+        return reply.code(200).send({ message: "Lock deletado com sucesso." });
+      } else {
+        return reply.status(404).send({ error: "Lock não encontrado." });
+      }
+    } catch (e) {
+      console.error("Erro ao deletar lock:", e);
+      return reply.status(500).send({ error: "Erro interno no servidor." });
+    }
+  });
 }

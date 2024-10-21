@@ -14,4 +14,8 @@ export class LockService {
   async listAll() {
     return await this.lockRepository.findAll();
   }
+  async deleteById(id: string) {
+    return await this.lockRepository.deleteById(id);
+  }
+
 }
