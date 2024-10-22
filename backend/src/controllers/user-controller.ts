@@ -35,17 +35,22 @@ export async function userRoutes(app: FastifyInstance) {
   });
 
   // Rota PUT para atualizar os ambientes do usuário
-  app.put("/:cpf", async (request, reply) => {
-    const { cpf } = request.params as { cpf: string }; // Captura do CPF via path params
+  app.put("/:id", async (request, reply) => {
+    const { id } = request.params as { id: string }; // Captura do id via path params
     const updateBodySchema = z.object({
       environmentId: z.string(),
     });
     const { environmentId } = updateBodySchema.parse(request.body); // Captura do ID do ambiente via corpo da requisição
-
+    console.log(environmentId);
     try {
-      const updatedUser = await userService.updateUserEnvironment(cpf, environmentId);
+      const updatedUser = await userService.updateUserEnvironment(
+        id,
+        environmentId
+      );
       if (updatedUser) {
-        return reply.code(200).send({ message: "Ambiente do usuário atualizado com sucesso." });
+        return reply
+          .code(200)
+          .send({ message: "Ambiente do usuário atualizado com sucesso." });
       } else {
         return reply.status(404).send({ error: "Usuário não encontrado." });
       }
@@ -60,13 +65,15 @@ export async function userRoutes(app: FastifyInstance) {
     const updateBodySchema = z.object({
       levelId: z.string(),
     });
-  
+
     const { levelId } = updateBodySchema.parse(request.body);
-  
+
     try {
       const updatedUser = await userService.updateUserLevel(cpf, levelId);
       if (updatedUser) {
-        return reply.code(200).send({ message: "Level do usuário atualizado com sucesso." });
+        return reply
+          .code(200)
+          .send({ message: "Level do usuário atualizado com sucesso." });
       } else {
         return reply.status(404).send({ error: "Usuário não encontrado." });
       }
@@ -77,14 +84,24 @@ export async function userRoutes(app: FastifyInstance) {
   });
 
   app.delete("/:cpf/environments/:environmentId", async (request, reply) => {
-    const { cpf, environmentId } = request.params as { cpf: string; environmentId: string };
-  
+    const { cpf, environmentId } = request.params as {
+      cpf: string;
+      environmentId: string;
+    };
+
     try {
-      const result = await userService.removeUserEnvironment(cpf, environmentId);
+      const result = await userService.removeUserEnvironment(
+        cpf,
+        environmentId
+      );
       if (result) {
-        return reply.code(200).send({ message: "Ambiente removido do usuário com sucesso." });
+        return reply
+          .code(200)
+          .send({ message: "Ambiente removido do usuário com sucesso." });
       } else {
-        return reply.status(404).send({ error: "Associação não encontrada ou usuário inexistente." });
+        return reply
+          .status(404)
+          .send({ error: "Associação não encontrada ou usuário inexistente." });
       }
     } catch (e) {
       console.error("Erro ao remover ambiente do usuário:", e);
@@ -99,7 +116,9 @@ export async function userRoutes(app: FastifyInstance) {
     try {
       const deletedUser = await userService.deleteByCpf(cpf);
       if (deletedUser) {
-        return reply.code(200).send({ message: "Usuário deletado com sucesso." });
+        return reply
+          .code(200)
+          .send({ message: "Usuário deletado com sucesso." });
       } else {
         return reply.status(404).send({ error: "Usuário não encontrado." });
       }

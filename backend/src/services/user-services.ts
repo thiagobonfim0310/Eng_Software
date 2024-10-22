@@ -35,8 +35,8 @@ export class UserService {
     return await this.userRepository.findAll();
   }
 
-  async updateUserEnvironment(cpf: string, environmentId: string) {
-    return await this.userRepository.updateUserEnvironment(cpf, environmentId);
+  async updateUserEnvironment(id: string, environmentId: string) {
+    return await this.userRepository.updateUserEnvironment(id, environmentId);
   }
 
   async updateUserLevel(cpf: string, levelId: string) {
