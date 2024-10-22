@@ -7,12 +7,19 @@ export class EnvironmentRepository {
     return environment;
   }
   async findAll() {
-    const environments = await prisma.environment.findMany();
+    const environments = await prisma.environment.findMany({
+      include: {
+        subEnvironments: true,
+      },
+    });
     return environments;
   }
 
-  
   async deleteById(id: string) {
     return await prisma.environment.delete({ where: { id } });
+  }
+
+  async findById(id: string) {
+    return await prisma.environment.findUnique({ where: { id } });
   }
 }

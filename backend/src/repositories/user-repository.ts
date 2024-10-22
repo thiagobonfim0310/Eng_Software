@@ -11,7 +11,8 @@ export class UserRepository {
   async findAll() {
     const users = await prisma.user.findMany({
       include: {
-        environments: { // Inclui os ambientes do usuário
+        environments: {
+          // Inclui os ambientes do usuário
           include: {
             environment: true, // Inclui as informações do ambiente
           },
@@ -21,10 +22,9 @@ export class UserRepository {
     });
     return users;
   }
-  
 
-  async updateUserEnvironment(cpf: string, environmentId: string) {
-    const user = await prisma.user.findUnique({ where: { cpf } });
+  async updateUserEnvironment(id: string, environmentId: string) {
+    const user = await prisma.user.findUnique({ where: { id } });
     if (!user) return null;
 
     // Verifica se já existe a associação para evitar duplicatas
@@ -52,25 +52,24 @@ export class UserRepository {
   async updateUserLevel(cpf: string, levelId: string) {
     const user = await prisma.user.findUnique({ where: { cpf } });
     if (!user) return null;
-  
+
     // Verifica se o Level existe
     const level = await prisma.level.findUnique({ where: { id: levelId } });
     if (!level) throw new Error("Level não encontrado.");
-  
+
     // Atualiza o Level do usuário
     const updatedUser = await prisma.user.update({
       where: { cpf },
       data: { levelId },
     });
-  
+
     return updatedUser;
   }
-  
 
   async removeUserEnvironment(cpf: string, environmentId: string) {
     const user = await prisma.user.findUnique({ where: { cpf } });
     if (!user) return null;
-  
+
     const existingAssociation = await prisma.environmentUser.findUnique({
       where: {
         userId_environmentId: {
@@ -79,9 +78,9 @@ export class UserRepository {
         },
       },
     });
-  
+
     if (!existingAssociation) return null;
-  
+
     await prisma.environmentUser.delete({
       where: {
         userId_environmentId: {
@@ -90,10 +89,24 @@ export class UserRepository {
         },
       },
     });
-  
+
     return true;
   }
-  
+
+  async findByTag(tag: string) {
+    return await prisma.user.findFirst({
+      where: { tag },
+      include: {
+        environments: {
+          // Inclui os ambientes do usuário
+          include: {
+            environment: true, // Inclui as informações do ambiente
+          },
+        },
+        level: true, // Inclui as informações do nível associado ao usuário
+      },
+    });
+  }
 
   async deleteByCpf(cpf: string) {
     return await prisma.user.delete({ where: { cpf } });
