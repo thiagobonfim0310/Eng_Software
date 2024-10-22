@@ -17,6 +17,46 @@ function Acesso() {
     const [levelToDelete, setLevelToDelete] = useState(""); // Para armazenar o nível a ser deletado
     const [isDeleteDropdownOpen, setIsDeleteDropdownOpen] = useState(false); // Para controlar a exibição do dropdown
 
+     // Novo estado para armazenar o nome do novo ambiente
+     const [newEnvironmentName, setNewEnvironmentName] = useState("");
+     const [isAddEnvModalOpen, setIsAddEnvModalOpen] = useState(false); // Controle do modal de adicionar ambiente
+
+    const [isDeleteEnvModalOpen, setIsDeleteEnvModalOpen] = useState(false); // Controle do modal de deletar ambiente
+ 
+     // Função para adicionar um novo ambiente
+     const handleAddEnvironment = async () => {
+         if (!newEnvironmentName) {
+             alert("Por favor, insira um nome para o ambiente.");
+             return;
+         }
+ 
+         try {
+             const response = await fetch("http://localhost:3333/environments", {
+                 method: "POST",
+                 headers: {
+                     "Content-Type": "application/json",
+                 },
+                 body: JSON.stringify({ name: newEnvironmentName }), // Enviando o nome do novo ambiente
+             });
+ 
+             if (response.ok) {
+                 alert("Ambiente adicionado com sucesso.");
+                 setIsAddEnvModalOpen(false);
+                 setNewEnvironmentName(""); // Limpar o campo após adicionar
+                 fetchEnvironments(); // Atualiza a lista de ambientes
+             } else {
+                 alert("Erro ao adicionar ambiente. O ambiente pode já existir.");
+             }
+         } catch (error) {
+             console.error("Erro ao adicionar ambiente:", error);
+             alert("Erro ao adicionar ambiente.");
+         }
+     };
+ 
+     useEffect(() => {
+         fetchLevels();
+     }, []);
+
     // Função para buscar níveis
     const fetchLevels = async () => {
         try {
@@ -33,11 +73,6 @@ function Acesso() {
         }
     };
 
-    // Fetch dos níveis ao montar o componente
-    useEffect(() => {
-        fetchLevels();
-    }, []);
-
     // Fetch dos environments ao abrir o modal de edição
     const fetchEnvironments = async () => {
         try {
@@ -48,6 +83,12 @@ function Acesso() {
             console.error("Erro ao buscar environments:", error);
         }
     };
+
+    // Fetch dos níveis ao montar o componente
+    useEffect(() => {
+        fetchLevels();
+        fetchEnvironments();
+    }, []);
 
     const openEditModal = (nivel) => {
         setCurrentNvl(nivel);
@@ -135,6 +176,35 @@ function Acesso() {
         }
     };
 
+    // Função para deletar um ambiente existente
+    const handleDeleteEnvironment = async () => {
+        if (!selectedEnvironmentId) {
+            alert("Por favor, selecione um ambiente para deletar.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:3333/environments/${selectedEnvironmentId}`, {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                alert("Ambiente deletado com sucesso.");
+                setEnvironments((prev) => prev.filter(env => env.id !== selectedEnvironmentId)); // Remove o ambiente deletado do estado local
+                setIsDeleteEnvModalOpen(false);
+                setSelectedEnvironmentId("");
+                fetchLevels();
+            } else if (response.status === 404) {
+                alert("Ambiente não encontrado.");
+            } else {
+                alert("Erro ao deletar o ambiente.");
+            }
+        } catch (error) {
+            console.error("Erro ao deletar ambiente:", error);
+            alert("Erro ao deletar ambiente.");
+        }
+    };
+
     const handleDeleteLevel = async (id) => {
         try {
             await axios.delete(`http://localhost:3333/levels/${id}`);
@@ -197,12 +267,61 @@ function Acesso() {
                     Adicionar Acesso
                 </button>
                 <button 
+                    className={styles.add_environment_button} 
+                    onClick={() => setIsAddEnvModalOpen(true)} // Abre o modal para adicionar ambiente
+                >
+                    Adicionar Ambiente
+                </button>
+                <button 
                     className={styles.delete_level_button} 
                     onClick={toggleDeleteDropdown}
                 >
                     Deletar Nível
                 </button>
-                {isDeleteDropdownOpen && (
+                <button 
+                    className={styles.delete_environment_button} 
+                    onClick={() => setIsDeleteEnvModalOpen(true)} // Abre o modal para deletar ambiente
+                >
+                    Deletar Ambiente
+                </button>
+            </div>
+
+            {isDeleteEnvModalOpen && (
+                <div className={styles.modal}>
+                    <div className={styles.modal_content}>
+                        <span className={styles.close} onClick={() => setIsDeleteEnvModalOpen(false)}>&times;</span>
+                        <h1>Deletar Ambiente</h1>
+                        <select 
+                            value={selectedEnvironmentId} 
+                            onChange={(e) => setSelectedEnvironmentId(e.target.value)}
+                        >
+                            <option value="">Selecione um ambiente</option>
+                            {environments.map(env => (
+                                <option key={env.id} value={env.id}>{env.name}</option>
+                            ))}
+                        </select>
+                        <button onClick={handleDeleteEnvironment}>Deletar</button>
+                    </div>
+                </div>
+            )}
+
+            {isAddEnvModalOpen && (
+                <div className={styles.modal}>
+                    <div className={styles.modal_content}>
+                        <span className={styles.close} onClick={() => setIsAddEnvModalOpen(false)}>&times;</span>
+                        <h1>Adicionar Ambiente</h1>
+                        <input
+                            type="text"
+                            placeholder="Nome do Ambiente"
+                            value={newEnvironmentName}
+                            onChange={(e) => setNewEnvironmentName(e.target.value)}
+                        />
+                        <button onClick={handleAddEnvironment}>Adicionar</button> {/* Botão para adicionar ambiente */}
+                    </div>
+                </div>
+            )}
+
+            {isDeleteDropdownOpen && (
                     <div className={styles.dropdown}>
                         <select 
                             value={levelToDelete} 
@@ -215,8 +334,7 @@ function Acesso() {
                         </select>
                         <button onClick={() => levelToDelete && handleDeleteLevel(levelToDelete)}>Confirmar Deleção</button>
                     </div>
-                )}
-            </div>
+            )}
 
             {isAddModalOpen && (
                 <div className={styles.modal}>
@@ -273,7 +391,7 @@ function Acesso() {
                 </div>
             )}
 
-<div className={styles.conteudo_conteiner}>
+            <div className={styles.conteudo_conteiner}>
                 <ul>
                     {levels.map(level => (
                         <li key={level.name}>
