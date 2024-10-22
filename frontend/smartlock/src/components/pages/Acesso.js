@@ -7,13 +7,9 @@ function Acesso() {
     const [levels, setLevels] = useState([]);
     const [acessos, setAcessos] = useState({});
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-<<<<<<< Updated upstream
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [newLevelName, setNewLevelName] = useState(""); // Estado para o nome do novo nível
-=======
-    const [area, setArea] = useState("");
->>>>>>> Stashed changes
     const [currentNvl, setCurrentNvl] = useState("");
     const [environments, setEnvironments] = useState([]);
     const [selectedEnvironmentId, setSelectedEnvironmentId] = useState([]);
@@ -21,7 +17,6 @@ function Acesso() {
     const [levelToDelete, setLevelToDelete] = useState(""); // Para armazenar o nível a ser deletado
     const [isDeleteDropdownOpen, setIsDeleteDropdownOpen] = useState(false); // Para controlar a exibição do dropdown
 
-<<<<<<< Updated upstream
      // Novo estado para armazenar o nome do novo ambiente
      const [newEnvironmentName, setNewEnvironmentName] = useState("");
      const [isAddEnvModalOpen, setIsAddEnvModalOpen] = useState(false); // Controle do modal de adicionar ambiente
@@ -77,23 +72,6 @@ function Acesso() {
             console.error("Erro ao buscar níveis:", error);
         }
     };
-=======
-    useEffect(() => {
-        const fetchLevels = async () => {
-            try {
-                const response = await fetch("http://localhost:3333/levels");
-                const data = await response.json();
-                setLevels(data);
-                const initialAcessos = {};
-                data.forEach(level => {
-                    initialAcessos[level.name] = [];
-                });
-                setAcessos(initialAcessos);
-            } catch (error) {
-                console.error("Erro ao buscar níveis:", error);
-            }
-        };
->>>>>>> Stashed changes
 
     // Fetch dos environments ao abrir o modal de edição
     const fetchEnvironments = async () => {
@@ -138,7 +116,6 @@ function Acesso() {
             return;
         }
 
-<<<<<<< Updated upstream
         try {
             const response = await fetch("http://localhost:3333/levels", {
                 method: "POST",
@@ -147,12 +124,6 @@ function Acesso() {
                 },
                 body: JSON.stringify({ name: newLevelName }), // Enviando o nome do novo nível
             });
-=======
-        setAcessos(prev => ({
-            ...prev,
-            [currentNvl]: [...prev[currentNvl], area]
-        }));
->>>>>>> Stashed changes
 
             if (response.ok) {
                 alert("Nível adicionado com sucesso.");
@@ -180,7 +151,6 @@ function Acesso() {
             return;
         }
 
-<<<<<<< Updated upstream
         try {
             const response = await fetch(`http://localhost:3333/levels/${levelToUpdate.id}`, {
                 method: "PUT",
@@ -284,32 +254,6 @@ function Acesso() {
             console.error("Erro ao remover ambiente:", error);
             alert("Erro ao remover ambiente do nível.");
         }
-=======
-        setAcessos(prev => ({
-            ...prev,
-            [currentNvl]: prev[currentNvl].filter(area => area !== selectedAreaToDelete)
-        }));
-
-        setSelectedAreaToDelete("");
-    };
-
-    const handleDeleteLevel = async (id) => {
-        try {
-            await axios.delete(`http://localhost:3333/levels/${id}`);
-            setLevels(prevLevels => prevLevels.filter(level => level.id !== id));
-            alert("Nível deletado com sucesso.");
-        } catch (error) {
-            console.error("Erro ao deletar nível:", error);
-            alert("Erro ao deletar nível.");
-        } finally {
-            setLevelToDelete("");
-            setIsDeleteDropdownOpen(false); // Fecha o dropdown após deletar
-        }
-    };
-
-    const toggleDeleteDropdown = () => {
-        setIsDeleteDropdownOpen(!isDeleteDropdownOpen);
->>>>>>> Stashed changes
     };
 
     return (
@@ -323,43 +267,23 @@ function Acesso() {
                     Adicionar Acesso
                 </button>
                 <button 
-<<<<<<< Updated upstream
                     className={styles.add_environment_button} 
                     onClick={() => setIsAddEnvModalOpen(true)} // Abre o modal para adicionar ambiente
                 >
                     Adicionar Ambiente
                 </button>
                 <button 
-=======
->>>>>>> Stashed changes
                     className={styles.delete_level_button} 
                     onClick={toggleDeleteDropdown}
                 >
                     Deletar Nível
                 </button>
-<<<<<<< Updated upstream
                 <button 
                     className={styles.delete_environment_button} 
                     onClick={() => setIsDeleteEnvModalOpen(true)} // Abre o modal para deletar ambiente
                 >
                     Deletar Ambiente
                 </button>
-=======
-                {isDeleteDropdownOpen && (
-                    <div className={styles.dropdown}>
-                        <select 
-                            value={levelToDelete} 
-                            onChange={(e) => setLevelToDelete(e.target.value)}
-                        >
-                            <option value="">Selecione um nível</option>
-                            {levels.map(level => (
-                                <option key={level.id} value={level.id}>{level.name}</option>
-                            ))}
-                        </select>
-                        <button onClick={() => levelToDelete && handleDeleteLevel(levelToDelete)}>Confirmar Deleção</button>
-                    </div>
-                )}
->>>>>>> Stashed changes
             </div>
 
             {isDeleteEnvModalOpen && (
@@ -428,7 +352,6 @@ function Acesso() {
                 </div>
             )}
 
-<<<<<<< Updated upstream
             {isDeleteModalOpen && (
                 <div className={styles.modal}>
                     <div className={styles.modal_content}>
@@ -474,19 +397,10 @@ function Acesso() {
                         <li key={level.name}>
                             <QuadroInf
                                 titulo={level.name}
-=======
-            <div className={styles.conteudo_conteiner}>
-                <ul>
-                    {levels.map(level => (
-                        <li key={level.id}>
-                            <QuadroInf 
-                                titulo={level.name} 
->>>>>>> Stashed changes
                                 dado={level.environments.map(env => env.environment.name)}
                                 tituloClassName={styles.titulo}
                                 textoClassName={styles.texto}
                                 botoes={[
-<<<<<<< Updated upstream
                                     <button 
                                         className={styles.edit_button} 
                                         onClick={() => openEditModal(level.name)}
@@ -499,9 +413,6 @@ function Acesso() {
                                     >
                                         -
                                     </button>,
-=======
-                                    <button className={styles.edit_button} onClick={() => setCurrentNvl(level.name)}>+</button>
->>>>>>> Stashed changes
                                 ]}
                             />
                         </li>
