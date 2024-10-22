@@ -1,22 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import QuadroInf from "../layout/QuadroInf";
 import styles from "./Acesso.module.css";
 
 function Acesso() {
-    const [nvl1, setNvl1] = useState(['Acesso total']);
-    const [nvl2, setNvl2] = useState(['Porta principal', 'Sala 1', 'Sala 2', 'Lab 1', 'Lab 2']);
-    const [nvl3, setNvl3] = useState(['Porta principal', 'Sala 1', 'Sala 2', 'Lab 1']);
-    const [nvl4, setNvl4] = useState(['Porta principal', 'Sala 1', 'Lab 1']);
-    const [visi, setVisi] = useState(['Porta principal']);
-
-    // Estados da modal de adicionar e remover acessos
+    const [levels, setLevels] = useState([]);
+    const [acessos, setAcessos] = useState({}); // Para armazenar os acessos por nível
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [area, setArea] = useState("");
-    const [currentNvl, setCurrentNvl] = useState(""); // Nível atual para edição
-
-    // Estado para o dropdown de deletar
+    const [currentNvl, setCurrentNvl] = useState("");
     const [selectedAreaToDelete, setSelectedAreaToDelete] = useState("");
+
+    useEffect(() => {
+        const fetchLevels = async () => {
+            try {
+                const response = await fetch("http://localhost:3333/levels");
+                const data = await response.json();
+                setLevels(data); // Armazena os níveis na variável de estado
+                // Inicializa os acessos por nível
+                const initialAcessos = {};
+                data.forEach(level => {
+                    initialAcessos[level.name] = []; // Inicia um array vazio para cada nível
+                });
+                setAcessos(initialAcessos);
+            } catch (error) {
+                console.error("Erro ao buscar níveis:", error);
+            }
+        };
+
+        fetchLevels();
+    }, []);
 
     const handleAddAccess = () => {
         if (!area) {
@@ -24,30 +37,14 @@ function Acesso() {
             return;
         }
 
-        // Lógica para adicionar o acesso ao nível correto
-        switch (currentNvl) {
-            case "nvl1":
-                setNvl1([...nvl1, area]);
-                break;
-            case "nvl2":
-                setNvl2([...nvl2, area]);
-                break;
-            case "nvl3":
-                setNvl3([...nvl3, area]);
-                break;
-            case "nvl4":
-                setNvl4([...nvl4, area]);
-                break;
-            case "visi":
-                setVisi([...visi, area]);
-                break;
-            default:
-                break;
-        }
+        setAcessos(prev => ({
+            ...prev,
+            [currentNvl]: [...prev[currentNvl], area] // Adiciona a área ao nível atual
+        }));
 
         setIsAddModalOpen(false);
         setArea("");
-        setCurrentNvl(""); // Limpa o nível atual
+        setCurrentNvl("");
     };
 
     const handleDeleteAccess = () => {
@@ -56,29 +53,13 @@ function Acesso() {
             return;
         }
 
-        // Lógica para deletar o acesso correto
-        switch (currentNvl) {
-            case "nvl1":
-                setNvl1(nvl1.filter(area => area !== selectedAreaToDelete));
-                break;
-            case "nvl2":
-                setNvl2(nvl2.filter(area => area !== selectedAreaToDelete));
-                break;
-            case "nvl3":
-                setNvl3(nvl3.filter(area => area !== selectedAreaToDelete));
-                break;
-            case "nvl4":
-                setNvl4(nvl4.filter(area => area !== selectedAreaToDelete));
-                break;
-            case "visi":
-                setVisi(visi.filter(area => area !== selectedAreaToDelete));
-                break;
-            default:
-                break;
-        }
+        setAcessos(prev => ({
+            ...prev,
+            [currentNvl]: prev[currentNvl].filter(area => area !== selectedAreaToDelete) // Remove a área do nível atual
+        }));
 
         setIsDeleteModalOpen(false);
-        setSelectedAreaToDelete(""); // Limpa o dropdown após a remoção
+        setSelectedAreaToDelete("");
     };
 
     const openAddModal = (nivel) => {
@@ -129,19 +110,7 @@ function Acesso() {
                             onChange={(e) => setSelectedAreaToDelete(e.target.value)}
                         >
                             <option value="">Selecione uma área</option>
-                            {currentNvl === "nvl1" && nvl1.map((area, index) => (
-                                <option key={index} value={area}>{area}</option>
-                            ))}
-                            {currentNvl === "nvl2" && nvl2.map((area, index) => (
-                                <option key={index} value={area}>{area}</option>
-                            ))}
-                            {currentNvl === "nvl3" && nvl3.map((area, index) => (
-                                <option key={index} value={area}>{area}</option>
-                            ))}
-                            {currentNvl === "nvl4" && nvl4.map((area, index) => (
-                                <option key={index} value={area}>{area}</option>
-                            ))}
-                            {currentNvl === "visi" && visi.map((area, index) => (
+                            {acessos[currentNvl]?.map((area, index) => (
                                 <option key={index} value={area}>{area}</option>
                             ))}
                         </select>
@@ -152,66 +121,20 @@ function Acesso() {
 
             <div className={styles.conteudo_conteiner}>
                 <ul>
-                    <li>
-                        <QuadroInf 
-                            titulo="Nível 1" 
-                            dado={nvl1} 
-                            tituloClassName={styles.titulo} 
-                            textoClassName={styles.texto}
-                            botoes={[
-                                <button className={styles.edit_button} onClick={() => openAddModal("nvl1")}>+</button>,
-                                <button className={styles.edit_button} onClick={() => openDeleteModal("nvl1")}>-</button>
-                            ]}
-                        />
-                    </li>
-                    <li>
-                        <QuadroInf 
-                            titulo="Nível 2" 
-                            dado={nvl2} 
-                            tituloClassName={styles.titulo} 
-                            textoClassName={styles.texto}
-                            botoes={[
-                                <button className={styles.edit_button} onClick={() => openAddModal("nvl2")}>+</button>,
-                                <button className={styles.edit_button} onClick={() => openDeleteModal("nvl2")}>-</button>
-                            ]}
-                        />
-                    </li>
-                    <li>
-                        <QuadroInf 
-                            titulo="Nível 3" 
-                            dado={nvl3} 
-                            tituloClassName={styles.titulo} 
-                            textoClassName={styles.texto}
-                            botoes={[
-                                <button className={styles.edit_button} onClick={() => openAddModal("nvl3")}>+</button>,
-                                <button className={styles.edit_button} onClick={() => openDeleteModal("nvl3")}>-</button>
-                            ]}
-                        />
-                    </li>
-                    <li>
-                        <QuadroInf 
-                            titulo="Nível 4" 
-                            dado={nvl4} 
-                            tituloClassName={styles.titulo} 
-                            textoClassName={styles.texto} 
-                            botoes={[
-                                <button className={styles.edit_button} onClick={() => openAddModal("nvl4")}>+</button>,
-                                <button className={styles.edit_button} onClick={() => openDeleteModal("nvl4")}>-</button>
-                            ]}
-                        />
-                    </li>
-                    <li>
-                        <QuadroInf 
-                            titulo="Visitante" 
-                            dado={visi} 
-                            tituloClassName={styles.titulo} 
-                            textoClassName={styles.texto} 
-                            botoes={[
-                                <button className={styles.edit_button} onClick={() => openAddModal("visi")}>+</button>,
-                                <button className={styles.edit_button} onClick={() => openDeleteModal("visi")}>-</button>
-                            ]}
-                        />
-                    </li>
+                    {levels.map(level => (
+                        <li key={level.name}>
+                            <QuadroInf 
+                                titulo={level.name} 
+                                dado={level.environments.map(env => env.environment.name)}
+                                tituloClassName={styles.titulo} 
+                                textoClassName={styles.texto}
+                                botoes={[
+                                    <button className={styles.edit_button} onClick={() => openAddModal(level.name)}>+</button>,
+                                    <button className={styles.edit_button} onClick={() => openDeleteModal(level.name)}>-</button>
+                                ]}
+                            />
+                        </li>
+                    ))}
                 </ul>
             </div>
         </section>
