@@ -109,6 +109,24 @@ export async function userRoutes(app: FastifyInstance) {
     }
   });
 
+  app.delete("/:cpf/level", async (request, reply) => {
+    const { cpf } = request.params as { cpf: string };
+  
+    try {
+      const result = await userService.removeUserLevel(cpf);
+      if (result) {
+        return reply
+          .code(200)
+          .send({ message: "Level do usuário removido com sucesso." });
+      } else {
+        return reply.status(404).send({ error: "Usuário não encontrado." });
+      }
+    } catch (e) {
+      console.error("Erro ao remover level do usuário:", e);
+      return reply.status(500).send({ error: "Erro interno no servidor." });
+    }
+  });
+
   // Rota DELETE que recebe o CPF no corpo da requisição
   app.delete("/:cpf", async (request, reply) => {
     const { cpf } = request.params as { cpf: string }; // Captura do CPF via path params

@@ -24,6 +24,9 @@ function Permissoes() {
     const [selectedRoomId, setSelectedRoomId] = useState("");
     const [roomToRemoveId, setRoomToRemoveId] = useState("");
     const [selectedLevel, setSelectedLevel] = useState('');
+    const [userToRemoveLevel, setUserToRemoveLevel] = useState(null); // Armazena o usuário selecionado
+    const [levelToRemove, setLevelToRemove] = useState(''); // Armazena o nome do nível
+    const [isRemoveLevelModalOpen, setIsRemoveLevelModalOpen] = useState(false); // Estado do novo modal
     const [rooms, setRooms] = useState([]);
     const [levels, setLevels] = useState([]);
 
@@ -185,6 +188,26 @@ function Permissoes() {
         }
     };
 
+    const openRemoveLevelModal = (user) => {
+        setUserToRemoveLevel(user); // Define o usuário selecionado
+        setLevelToRemove(user.level?.name || 'Sem nível'); // Define o nome do nível, se houver
+        setIsRemoveLevelModalOpen(true); // Abre o modal
+    };
+
+    const handleRemoveLevel = async () => {
+        try {
+            await axios.delete(`http://localhost:3333/users/${userToRemoveLevel.cpf}/level`);
+            alert("Nível removido com sucesso!");
+            setIsRemoveLevelModalOpen(false); // Fecha o modal
+            setUserToRemoveLevel(null); // Limpa o estado
+            fetchData(); // Atualiza os dados da tabela
+        } catch (error) {
+            console.error("Erro ao remover nível do usuário:", error);
+            alert("Erro ao remover nível do usuário. Tente novamente.");
+        }
+    };
+    
+
     const openLevelModal = (user) => {
         setCurrentUserCpf(user.cpf); // Definindo o CPF do usuário
         setSelectedLevel(user.level?.id || ""); // Define o nível atual do usuário, se houver
@@ -245,7 +268,7 @@ function Permissoes() {
                 <button className={`${styles.actionButton} ${styles.redButton}`} onClick={() => openRemoveModal(user)}>
                     - Sala
                 </button>
-                <button className={`${styles.actionButton} ${styles.redButton}`} onClick={() => { /* Função para deletar nível */ }}>
+                <button className={`${styles.actionButton} ${styles.redButton}`} onClick={() => openRemoveLevelModal(user)}>
                     - Nível
                 </button>
             </div>
@@ -349,6 +372,32 @@ function Permissoes() {
                     </div>
                 </div>
             )}
+
+            {isRemoveLevelModalOpen && (
+                <div className={styles.modal}>
+                    <div className={styles.modal_content}>
+                        <h1>Remover Nível</h1>
+                        <p>
+                            Tem certeza que deseja remover o nível <strong>{levelToRemove}</strong>  de <strong>{userToRemoveLevel?.name}</strong>?
+                        </p>
+                        <div className={styles.button_container}>
+                            <button 
+                                className={`${styles.confirmButton} ${styles.greenButton}`} 
+                                onClick={handleRemoveLevel}
+                            >
+                                Confirmar
+                            </button>
+                            <button 
+                                className={`${styles.confirmButton} ${styles.redButton}`} 
+                                onClick={() => setIsRemoveLevelModalOpen(false)}
+                            >
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
 
 
             <TabelaCust 

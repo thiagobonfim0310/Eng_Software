@@ -93,6 +93,18 @@ export class UserRepository {
     return true;
   }
 
+  async removeUserLevel(cpf: string) {
+    const user = await prisma.user.findUnique({ where: { cpf } });
+    if (!user) return null;
+  
+    const updatedUser = await prisma.user.update({
+      where: { cpf },
+      data: { levelId: null }, // Remove o level associado
+    });
+  
+    return updatedUser;
+  }
+
   async findByTag(tag: string) {
     return await prisma.user.findFirst({
       where: { tag },
