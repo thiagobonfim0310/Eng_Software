@@ -35,8 +35,8 @@ export class UserService {
     return await this.userRepository.findAll();
   }
 
-  async updateUserEnvironment(cpf: string, environmentId: string) {
-    return await this.userRepository.updateUserEnvironment(cpf, environmentId);
+  async updateUserEnvironment(id: string, environmentId: string) {
+    return await this.userRepository.updateUserEnvironment(id, environmentId);
   }
 
   async updateUserLevel(cpf: string, levelId: string) {
@@ -46,6 +46,11 @@ export class UserService {
   async removeUserEnvironment(cpf: string, environmentId: string) {
     return await this.userRepository.removeUserEnvironment(cpf, environmentId);
   }
+
+  async removeUserLevel(cpf: string) {
+    return await this.userRepository.removeUserLevel(cpf);
+  }
+  
 
   async deleteByCpf(cpf: string) {
     return await this.userRepository.deleteByCpf(cpf);

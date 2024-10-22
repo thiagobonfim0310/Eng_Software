@@ -2,10 +2,21 @@ import { FastifyInstance } from "fastify";
 import { LockRepository } from "../repositories/lock-repository";
 import { LockService } from "../services/lock-service";
 import { z } from "zod";
+import { UserRepository } from "../repositories/user-repository";
+import { EnvironmentRepository } from "../repositories/environments-repository";
+import { CheckInRepository } from "../repositories/check-in-repository";
 
 export async function lockRoutes(app: FastifyInstance) {
   const lockRepository = new LockRepository();
-  const lockService = new LockService(lockRepository);
+  const userRespository = new UserRepository();
+  const environmentRespository = new EnvironmentRepository();
+  const checkInRepository = new CheckInRepository();
+  const lockService = new LockService(
+    lockRepository,
+    userRespository,
+    environmentRespository,
+    checkInRepository
+  );
   app.get("/", async (request, reply) => {
     try {
       const locks = await lockService.listAll();
@@ -27,6 +38,31 @@ export async function lockRoutes(app: FastifyInstance) {
       return reply.status(409).send();
     }
     return reply.code(201).send();
+  });
+
+  app.put("/:id", async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const updateBodySchema = z.object({
+      environmentId: z.string(),
+    });
+    const { environmentId } = updateBodySchema.parse(request.body);
+
+    try {
+      const updateLock = await lockService.updateLockEnvironment(
+        id,
+        environmentId
+      );
+      if (updateLock) {
+        return reply
+          .code(200)
+          .send({ message: "Ambiente do lock atualizado com sucesso." });
+      } else {
+        return reply.status(404).send({ error: "Lock não encontrado " });
+      }
+    } catch (e) {
+      console.error("Erro ao associar  lock:", e);
+      return reply.status(500).send({ error: "Erro interno no servidor." });
+    }
   });
 
   app.delete("/:id", async (request, reply) => {

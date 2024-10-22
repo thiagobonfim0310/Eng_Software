@@ -60,7 +60,7 @@ model Lock {
 model CheckIn {
   id           String   @id @default(uuid())
   createdAt    DateTime @default(now())
-  validated_at DateTime?
+  validated    Boolean  
   
   user         User? @relation(fields: [user_id], references: [id])
   user_id      String?

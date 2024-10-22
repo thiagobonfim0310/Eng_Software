@@ -14,6 +14,7 @@ import NavBar from "./components/layout/NavBar";
 import SideBar from "./components/layout/SideBar";
 import ListUsers from "./components/pages/ListUsers";
 import ProfileList from "./components/pages/EditProfile";
+import Trancas from "./components/pages/Trancas";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/registro" element={<RegisterUser />} />
         <Route path="/list" element={<ListUsers />} />
         <Route path="/profile" element={<ProfileList />} />
+        <Route path="/tranca" element={<Trancas />} />
 
         <Route path="/" element={<Navigate to="/dashboard" />} />
       </Routes>

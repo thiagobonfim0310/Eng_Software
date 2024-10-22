@@ -13,4 +13,16 @@ export class LockRepository {
   async deleteById(id: string) {
     return await prisma.lock.delete({ where: { id } });
   }
+  async updateLockEnvironment(id: string, environmentId: string) {
+    return await prisma.lock.update({
+      where: { id },
+      data: { environmentId },
+    });
+  }
+  async findByName(name: string) {
+    return await prisma.lock.findFirst({
+      where: { name },
+      include: { environment: true },
+    });
+  }
 }

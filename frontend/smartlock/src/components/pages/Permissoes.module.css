@@ -106,3 +106,54 @@
     border-color: #007bff; /* Cor da borda ao focar (opcional) */
     outline: none;         /* Remove o contorno padrão do navegador */
 }
+
+.actionsContainer {
+    display: flex;
+    flex-direction: column; /* Organiza os grupos de botões em coluna */
+}
+
+.topRow, .bottomRow {
+
+    justify-content: space-between; /* Espaça os botões na mesma linha */
+}
+
+.topRow {
+    margin-bottom: 8px; /* Espaçamento entre as linhas superior e inferior */
+}
+
+.actionButton {
+    width: 50px; /* Define a largura do botão */
+    height: 23px; /* Define a altura do botão */
+    margin: 0 4px; /* Espaçamento horizontal entre os botões */
+    padding: 0; /* Remove padding para manter as dimensões exatas */
+    border: none;
+    color: white; /* Cor do texto */
+    border: none;
+    border-radius: 5px; /* Pontas arredondadas */
+    cursor: pointer;
+}
+
+.confirmButton {
+    width: 50px; /* Define a largura do botão */
+    height: 40px; /* Define a altura do botão */
+    margin: 0 4px; /* Espaçamento horizontal entre os botões */
+    padding: 0; /* Remove padding para manter as dimensões exatas */
+    border: none;
+    color: white; /* Cor do texto */
+    border: none;
+    border-radius: 5px; /* Pontas arredondadas */
+    cursor: pointer;
+    margin-top: 10px; /* Espaçamento entre as linhas superior e inferior */
+}
+
+.greenButton {
+    background-color: #4CAF50; /* Botões verdes */
+}
+
+.redButton {
+    background-color: rgb(185, 30, 30); /* Botões vermelhos */
+}
+
+.deleteButton {
+    background-color: rgb(81, 81, 81); /* Botões vermelhos */
+}
