@@ -131,10 +131,29 @@
     text-align: center;
 }
 
+
+
+.edit_button:hover {
+    background-color: #45a049;
+}
+
+.delete_permission_button:hover {
+    background-color: #d32f2f; /* Cor de fundo mais escura ao passar o mouse */
+}
+
+.button_group {
+    display: flex;
+    flex-direction: column; /* Organiza os botões em coluna */
+    align-items: flex-end; /* Alinha os botões à esquerda */
+    
+    
+}
+
 .edit_button {
     margin-top: 10px;
+    margin-right: 5px;
     padding: 8px 12px;
-    background-color: #007bff;
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 4px;
@@ -142,7 +161,61 @@
     font-size: 14px;
 }
 
-.edit_button:hover {
-    background-color: #0056b3;
+.delete_permission_button
+{
+    margin-right: 5px; /* Adiciona espaço à direita para o botão de apagar */
+    background-color: #c03a3a; /* Cor de fundo do botão de apagar */
+    color: white; /* Cor do texto dos botões */
+    border: none; /* Remove a borda */
+    padding: 5px 5px; /* Diminuindo o padding para reduzir a altura */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    border-radius: 5px; /* Borda arredondada */
+    font-size: 12px; /* Tamanho da fonte menor */
+    line-height: 1.2; /* Ajusta a altura da linha para menor */
 }
 
+.delete_permission_button:hover {
+    background-color: #d32f2f; /* Cor de fundo mais escura ao passar o mouse */
+}
+
+.edit_buttons {
+    display: flex; /* Mantém os botões "+" e "-" lado a lado */
+    gap: 5px; /* Espaçamento entre os botões */
+}
+
+/* Estilo para o botão de deletar nível */
+.delete_level_button {
+    margin-left: 10px; /* Espaçamento à esquerda do botão */
+    padding: 8px 12px;
+    background-color: #dc3545; /* Vermelho */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.delete_level_button:hover {
+    background-color: #c82333; /* Vermelho escuro */
+}
+
+/* Estilo para o dropdown */
+.dropdown {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Para garantir que o dropdown fique acima de outros elementos */
+}
+
+/* Estilo para o select dentro do dropdown */
+.dropdown select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
