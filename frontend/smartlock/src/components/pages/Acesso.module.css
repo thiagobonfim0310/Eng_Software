@@ -199,23 +199,15 @@
     background-color: #c82333; /* Vermelho escuro */
 }
 
-/* Estilo para o dropdown */
-.dropdown {
-    position: absolute;
-    background-color: white;
-    border: 1px solid #ccc;
+.delete_button{
+    font-size: 18px;
+    background-color: rgb(81, 81, 81);
+    border: none;
     border-radius: 4px;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* Para garantir que o dropdown fique acima de outros elementos */
-}
 
-/* Estilo para o select dentro do dropdown */
-.dropdown select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    font-size: 16px;
+    margin-top: 10px;
+    margin-right: 5px;
+    padding: 6px 7px;
+    color: white;
+    cursor: pointer;
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { GoTrash } from "react-icons/go";
 import axios from 'axios';
 import TabelaCust from '../layout/TabelaCust.js';
 import styles from "./Permissoes.module.css";
@@ -237,7 +238,7 @@ function Permissoes() {
                     + Nível
                 </button>
                 <button className={`${styles.actionButton} ${styles.deleteButton}`} onClick={() => handleDelete(user.cpf)}>
-                    Delete
+                    <GoTrash />
                 </button>
             </div>
             <div className={styles.bottomRow}>

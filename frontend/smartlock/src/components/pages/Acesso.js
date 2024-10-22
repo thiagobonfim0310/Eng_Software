@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { GoTrash } from "react-icons/go";
 import axios from "axios";
 import QuadroInf from "../layout/QuadroInf";
 import styles from "./Acesso.module.css";
@@ -15,13 +16,20 @@ function Acesso() {
     const [selectedEnvironmentId, setSelectedEnvironmentId] = useState([]);
     const [selectedAreaToDelete, setSelectedAreaToDelete] = useState("");
     const [levelToDelete, setLevelToDelete] = useState(""); // Para armazenar o nível a ser deletado
-    const [isDeleteDropdownOpen, setIsDeleteDropdownOpen] = useState(false); // Para controlar a exibição do dropdown
 
      // Novo estado para armazenar o nome do novo ambiente
      const [newEnvironmentName, setNewEnvironmentName] = useState("");
      const [isAddEnvModalOpen, setIsAddEnvModalOpen] = useState(false); // Controle do modal de adicionar ambiente
 
     const [isDeleteEnvModalOpen, setIsDeleteEnvModalOpen] = useState(false); // Controle do modal de deletar ambiente
+
+    const [isDeleteLevelModalOpen, setIsDeleteLevelModalOpen] = useState(false); // Modal de deletar nível
+
+    // Função para abrir o modal de deletar nível
+    const openDeleteLevelModal = (nivel) => {
+        setLevelToDelete(nivel); // Armazenar o nível a ser deletado
+        setIsDeleteLevelModalOpen(true); // Abrir o modal
+    };
  
      // Função para adicionar um novo ambiente
      const handleAddEnvironment = async () => {
@@ -205,22 +213,19 @@ function Acesso() {
         }
     };
 
-    const handleDeleteLevel = async (id) => {
+    // Função para deletar o nível
+    const handleDeleteLevel = async () => {
         try {
-            await axios.delete(`http://localhost:3333/levels/${id}`);
-            setLevels(prevLevels => prevLevels.filter(level => level.id !== id));
+            await axios.delete(`http://localhost:3333/levels/${levelToDelete.id}`);
+            setLevels(prevLevels => prevLevels.filter(level => level.id !== levelToDelete.id));
             alert("Nível deletado com sucesso.");
         } catch (error) {
             console.error("Erro ao deletar nível:", error);
             alert("Erro ao deletar nível.");
         } finally {
             setLevelToDelete("");
-            setIsDeleteDropdownOpen(false); // Fecha o dropdown após deletar
+            setIsDeleteLevelModalOpen(false); // Fecha o modal após deletar
         }
-    };
-
-    const toggleDeleteDropdown = () => {
-        setIsDeleteDropdownOpen(!isDeleteDropdownOpen);
     };
 
     const handleRemoveEnvironment = async () => {
@@ -272,12 +277,7 @@ function Acesso() {
                 >
                     Adicionar Ambiente
                 </button>
-                <button 
-                    className={styles.delete_level_button} 
-                    onClick={toggleDeleteDropdown}
-                >
-                    Deletar Nível
-                </button>
+
                 <button 
                     className={styles.delete_environment_button} 
                     onClick={() => setIsDeleteEnvModalOpen(true)} // Abre o modal para deletar ambiente
@@ -285,6 +285,17 @@ function Acesso() {
                     Deletar Ambiente
                 </button>
             </div>
+
+            {isDeleteLevelModalOpen && (
+                <div className={styles.modal}>
+                    <div className={styles.modal_content}>
+                        <span className={styles.close} onClick={() => setIsDeleteLevelModalOpen(false)}>&times;</span>
+                        <h1>Confirmar Deleção do Nível</h1>
+                        <p>Tem certeza de que deseja deletar o nível {levelToDelete.name}?</p>
+                        <button onClick={handleDeleteLevel}>Confirmar</button>
+                    </div>
+                </div>
+            )}
 
             {isDeleteEnvModalOpen && (
                 <div className={styles.modal}>
@@ -319,21 +330,6 @@ function Acesso() {
                         <button onClick={handleAddEnvironment}>Adicionar</button> {/* Botão para adicionar ambiente */}
                     </div>
                 </div>
-            )}
-
-            {isDeleteDropdownOpen && (
-                    <div className={styles.dropdown}>
-                        <select 
-                            value={levelToDelete} 
-                            onChange={(e) => setLevelToDelete(e.target.value)}
-                        >
-                            <option value="">Selecione um nível</option>
-                            {levels.map(level => (
-                                <option key={level.id} value={level.id}>{level.name}</option>
-                            ))}
-                        </select>
-                        <button onClick={() => levelToDelete && handleDeleteLevel(levelToDelete)}>Confirmar Deleção</button>
-                    </div>
             )}
 
             {isAddModalOpen && (
@@ -413,6 +409,12 @@ function Acesso() {
                                     >
                                         -
                                     </button>,
+                                    <button 
+                                        className={styles.delete_button} 
+                                        onClick={() => openDeleteLevelModal(level)} // Abrir modal de deletar nível
+                                    >
+                                        <GoTrash />
+                                    </button>
                                 ]}
                             />
                         </li>
