@@ -3,7 +3,6 @@ import { VscGraph } from "react-icons/vsc";
 import { LiaIdCard } from "react-icons/lia";
 import { VscBriefcase } from "react-icons/vsc";
 import { FiLock } from "react-icons/fi";
-import { FaUser } from "react-icons/fa";
 
 export const SideBarData = [
   {
