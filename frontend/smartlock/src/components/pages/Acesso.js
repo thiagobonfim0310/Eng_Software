@@ -269,7 +269,7 @@ function Acesso() {
                     className={styles.add_permission_button}
                     onClick={() => setIsAddModalOpen(true)}
                 >
-                    Adicionar Acesso
+                    Adicionar Nível
                 </button>
                 <button 
                     className={styles.add_environment_button} 

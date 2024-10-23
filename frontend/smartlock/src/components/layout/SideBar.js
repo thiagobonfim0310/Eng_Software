@@ -25,7 +25,6 @@ function SideBar(){
 
                 <hr/>
                 <li>Perfil</li>
-                <li>Configurações</li>
             </ul>
         </div>
     )

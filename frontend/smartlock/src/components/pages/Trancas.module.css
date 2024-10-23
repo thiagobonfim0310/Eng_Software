@@ -110,7 +110,7 @@
 .actionButton {
   width: 50px; /* Define a largura do botão */
   height: 23px; /* Define a altura do botão */
-  margin: 0 4px; /* Espaçamento horizontal entre os botões */
+  margin: 2px 4px; /* Espaçamento horizontal entre os botões */
   padding: 0; /* Remove padding para manter as dimensões exatas */
   border: none;
   color: white; /* Cor do texto */

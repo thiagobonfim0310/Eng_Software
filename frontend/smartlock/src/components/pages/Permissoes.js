@@ -236,10 +236,7 @@ function Permissoes() {
             console.error("Erro ao atualizar nível do usuário:", error.response?.data || error.message);
             alert(`Erro ao atualizar nível do usuário. Tente novamente.${currentUserCpf} ${selectedLevel}`);
         }
-    };
-    
-    
-    
+    };   
 
     const columns = [
         { header: 'Nome', accessor: 'name' },
@@ -397,8 +394,6 @@ function Permissoes() {
                     </div>
                 </div>
             )}
-
-
 
             <TabelaCust 
                 columns={columns} 

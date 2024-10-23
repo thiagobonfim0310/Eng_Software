@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { GoTrash } from "react-icons/go";
 import axios from "axios";
 import TabelaCust from "../layout/TabelaCust.js";
 import styles from "./Trancas.module.css";
@@ -121,7 +122,7 @@ function Trancas() {
           className={`${styles.actionButton} ${styles.deleteButton}`}
           onClick={() => handleDelete(lock.id)}
         >
-          Deletar
+          <GoTrash />
         </button>
       </div>
       <div className={styles.bottomRow}>
