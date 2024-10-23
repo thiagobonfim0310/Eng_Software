@@ -9,17 +9,16 @@ function Trancas() {
   const [filteredData, setFilteredData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState("");
-  const [roomId, setRoomId] = useState(""); // Alterado para roomId
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isRemoveroomModalOpen, setIsRemoveroomModalOpen] = useState(false); // Estado do novo modal
   const [currentLockId, setCurrentLockId] = useState(null);
-  const [selectedRoomId, setSelectedRoomId] = useState(""); // Alterado para selectedRoomId
-  const [actionType, setActionType] = useState(""); // Continua igual, pois é genérico
-  const [rooms, setRooms] = useState([]); // Alterado para rooms
+  const [selectedRoomId, setSelectedRoomId] = useState("");
+  const [rooms, setRooms] = useState([]);
 
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get("http://localhost:3333/locks");
-      console.log("Locks Data: ", response.data); // Verifique os dados retornados
+      console.log("Locks Data: ", response.data);
       setData(response.data);
       setFilteredData(sortData(response.data));
     } catch (error) {
@@ -31,7 +30,6 @@ function Trancas() {
     try {
       const response = await axios.get("http://localhost:3333/environments");
       setRooms(response.data);
-      // Adiciona o console.log para verificar os dados e listar os nomes das salas
       console.log("Ambientes (Rooms) recebidos:", response.data);
     } catch (error) {
       console.error("Erro ao buscar ambientes:", error);
@@ -44,7 +42,7 @@ function Trancas() {
 
   useEffect(() => {
     fetchData();
-    fetchRooms(); // Alterado para fetchRooms
+    fetchRooms();
   }, [fetchData, fetchRooms]);
 
   const formatDate = (dateString) => {
@@ -78,8 +76,7 @@ function Trancas() {
   };
 
   const validateFields = () => {
-    if (!name || !roomId) {
-      // Alterado para roomId
+    if (!name) {
       alert("Todos os campos devem ser preenchidos.");
       return false;
     }
@@ -91,13 +88,12 @@ function Trancas() {
     try {
       await axios.post(
         "http://localhost:3333/locks",
-        { name, roomId },
+        { name },
         { headers: { "Content-Type": "application/json" } }
       );
       alert("Tranca registrada com sucesso!");
       setIsModalOpen(false);
       setName("");
-      setRoomId("");
       fetchData();
     } catch (error) {
       console.error("Erro ao registrar tranca:", error);
@@ -105,16 +101,9 @@ function Trancas() {
     }
   };
 
-  const getRoomNames = (rooms) => {
-    console.log("Rooms data for lock:", rooms); // Adicionando o console.log
-    return rooms && rooms.length > 0
-      ? rooms.map((room) => room.name).join(", ")
-      : "Nenhuma sala";
-  };
-
   const columns = [
     { header: "Nome", accessor: "name" },
-    { header: "Salas", accessor: "rooms" }, // Alterado para "Salas"
+    { header: "Salas", accessor: "environmentName" }, // Alterado para environmentName
     { header: "Criado Em", accessor: "createdAt" },
     { header: "Ações", accessor: "actions" },
   ];
@@ -124,7 +113,7 @@ function Trancas() {
       <div className={styles.topRow}>
         <button
           className={`${styles.actionButton} ${styles.greenButton}`}
-          onClick={() => openRoomModal(lock, "add")}
+          onClick={() => openRoomModal(lock)}
         >
           + Sala
         </button>
@@ -138,7 +127,7 @@ function Trancas() {
       <div className={styles.bottomRow}>
         <button
           className={`${styles.actionButton} ${styles.redButton}`}
-          onClick={() => openRoomModal(lock, "remove")}
+          onClick={() => openRemoveRoomModal(lock)}
         >
           - Sala
         </button>
@@ -146,19 +135,16 @@ function Trancas() {
     </div>
   );
 
-  const openRoomModal = (lock, action) => {
+  const openRoomModal = (lock) => {
     setCurrentLockId(lock.id);
     setIsEditModalOpen(true);
-    setActionType(action);
   };
 
-  const handleModalSave = () => {
-    if (actionType === "add") {
-      handleUpdateRoom();
-    } else {
-      handleRemoveRoom();
-    }
-  };
+  const openRemoveRoomModal = (lock) => {
+    setCurrentLockId(lock.id);
+    setSelectedRoomId(lock.environmentId || ""); // Define o nível atual do usuário, se houver
+    setIsRemoveroomModalOpen(true); // Abre o modal
+};
 
   const handleUpdateRoom = async () => {
     if (!selectedRoomId) {
@@ -180,22 +166,24 @@ function Trancas() {
   };
 
   const handleRemoveRoom = async () => {
-    if (!selectedRoomId) {
-      alert("Uma sala deve ser selecionada.");
-      return;
-    }
     try {
       await axios.delete(
         `http://localhost:3333/locks/${currentLockId}/environments/${selectedRoomId}`
       );
       alert("Sala removida com sucesso!");
-      setIsEditModalOpen(false); // Fecha o modal
-      setSelectedRoomId(""); // Limpa o estado
-      fetchData(); // Atualiza os dados da tabela
+      setIsRemoveroomModalOpen(false);
+      setSelectedRoomId("");
+      fetchData();
     } catch (error) {
       console.error("Erro ao remover sala:", error);
       alert("Erro ao remover sala. Tente novamente.");
     }
+  };
+
+  // Mapeia os locks para incluir o nome do ambiente
+  const getEnvironmentName = (environmentId) => {
+    const environment = rooms.find((room) => room.id === environmentId);
+    return environment ? environment.name : "N/A"; // Retorna "N/A" se não encontrar
   };
 
   return (
@@ -234,20 +222,6 @@ function Trancas() {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
-              {" "}
-              {/* Alterado para roomId */}
-              <option value="">Escolha uma sala</option>
-              {rooms.map(
-                (
-                  room // Alterado para rooms
-                ) => (
-                  <option key={room.id} value={room.id}>
-                    {room.name}
-                  </option>
-                )
-              )}
-            </select>
             <button onClick={handleRegister}>Registrar</button>
           </div>
         </div>
@@ -262,7 +236,7 @@ function Trancas() {
               &times;
             </span>
             <h1>
-              {actionType === "add" ? "Adicionar" : "Remover"} Sala da Tranca
+              Adicionar Sala da Tranca
             </h1>
             <select
               className={styles.dropdown}
@@ -276,16 +250,41 @@ function Trancas() {
                 </option>
               ))}
             </select>
-            <button onClick={handleModalSave}>Salvar</button>
+            <button onClick={handleUpdateRoom}>Salvar</button>
           </div>
         </div>
       )}
+
+      {isRemoveroomModalOpen && (
+                <div className={styles.modal}>
+                    <div className={styles.modal_content}>
+                        <h1>Remover Sala</h1>
+                        <p>
+                            Tem certeza que deseja remover a sala ?
+                        </p>
+                        <div className={styles.button_container}>
+                            <button 
+                                className={`${styles.confirmButton} ${styles.greenButton}`} 
+                                onClick={handleRemoveRoom}
+                            >
+                                Confirmar
+                            </button>
+                            <button 
+                                className={`${styles.confirmButton} ${styles.redButton}`} 
+                                onClick={() => setIsRemoveroomModalOpen(false)}
+                            >
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
       <TabelaCust
         columns={columns}
         data={filteredData.map((lock) => ({
           name: lock.name,
-          rooms: getRoomNames(lock.rooms),
+          environmentName: getEnvironmentName(lock.environmentId), // Mapeia para o nome do ambiente
           createdAt: formatDate(lock.createdAt),
           actions: renderActions(lock),
         }))}

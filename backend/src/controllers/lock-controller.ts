@@ -65,6 +65,22 @@ export async function lockRoutes(app: FastifyInstance) {
     }
   });
 
+  app.delete("/:lockId/environments/:environmentId", async (request, reply) => {
+    const { lockId, environmentId } = request.params as { lockId: string; environmentId: string };
+
+    try {
+        const deletedEnvironment = await lockService.deleteEnvironmentFromLock(lockId, environmentId);
+        if (deletedEnvironment) {
+            return reply.code(200).send({ message: "Ambiente removido do lock com sucesso." });
+        } else {
+            return reply.status(404).send({ error: "Lock ou ambiente não encontrado." });
+        }
+    } catch (e) {
+        console.error("Erro ao remover ambiente do lock:", e);
+        return reply.status(500).send({ error: "Erro interno no servidor." });
+    }
+  });
+
   app.delete("/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
 
