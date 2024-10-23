@@ -25,4 +25,17 @@ export class LockRepository {
       include: { environment: true },
     });
   }
+
+  async findById(id: string) {
+    return await prisma.lock.findUnique({
+      where: { id },
+    });
+  }
+
+  async deleteEnvironmentFromLock(lockId: string, environmentId: string) {
+    return await prisma.lock.update({
+        where: { id: lockId },
+        data: { environmentId: null } // Remove a relação definindo como null
+    });
+  }
 }

@@ -22,7 +22,6 @@ function SideBar() {
         })}
 
         <hr />
-        <li>Configurações</li>
       </ul>
     </div>
   );

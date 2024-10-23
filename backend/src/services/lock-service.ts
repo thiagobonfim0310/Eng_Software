@@ -109,4 +109,13 @@ export class LockService {
     });
     return true;
   }
+
+  async deleteEnvironmentFromLock(lockId: string, environmentId: string) {
+    const lock = await this.lockRepository.findById(lockId); // Certifique-se de ter um método findById no repository
+    if (!lock || lock.environmentId !== environmentId) {
+        return false; // Lock ou ambiente não correspondem
+    }
+
+    return await this.lockRepository.deleteEnvironmentFromLock(lockId, environmentId);
+  }
 }
