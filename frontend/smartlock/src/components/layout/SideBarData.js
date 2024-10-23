@@ -2,7 +2,8 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { VscGraph } from "react-icons/vsc";
 import { LiaIdCard } from "react-icons/lia";
 import { VscBriefcase } from "react-icons/vsc";
-import { FiLock } from "react-icons/fi"; // Importa o ícone de cadeado
+import { FiLock } from "react-icons/fi";
+import { FaUser } from "react-icons/fa";
 
 export const SideBarData = [
   {
@@ -33,6 +34,12 @@ export const SideBarData = [
     title: "Trancas",
     path: "/tranca",
     icon: <FiLock />, // Usa o ícone de cadeado
+    cName: "side-text",
+  },
+  {
+    title: "Perfil", // Novo item para o Perfil
+    path: "/perfil",
+    icon: <FaUser />, // Usa o ícone de usuário
     cName: "side-text",
   },
 ];
