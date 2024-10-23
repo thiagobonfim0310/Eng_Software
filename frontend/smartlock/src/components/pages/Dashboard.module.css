@@ -1,35 +1,70 @@
-.dashboard_container{
-    margin-top: 80px;
-    margin-left: 270px;
+.dashboard_container {
+  margin-top: 80px;
+  margin-left: 270px;
 }
 
 .conteudo_conteiner li {
-    margin-top: 20px;
-    padding: 15px;
-    margin-bottom: 20px;
-    flex: 1 1 calc(33.333% - 20px); 
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
+  margin-top: 20px;
+  padding: 15px;
+  margin-bottom: 20px;
+  flex: 1 1 calc(33.333% - 20px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
 }
 
-.conteudo_conteiner ul{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Três colunas de tamanhos iguais */
-    gap: 20px; /* Espaçamento entre os itens */
-    padding: 0;
-    list-style-type: none;
-    margin: 0;
+.conteudo_conteiner ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Três colunas de tamanhos iguais */
+  gap: 20px; /* Espaçamento entre os itens */
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
 }
 
 .titulo {
-    font-size: 16px;
-    color: black;
+  font-size: 16px;
+  color: black;
 }
 
 .texto {
-    font-size: 18px;
-    color: black;
-    font-weight: bold;
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
+}
+
+/* Estilizando o contêiner principal que segura os gráficos */
+.chartWrapper {
+  display: flex; /* Coloca os itens lado a lado */
+  justify-content: space-around; /* Espaçamento entre os gráficos */
+  align-items: flex-start; /* Alinha os gráficos ao topo */
+  flex-wrap: wrap; /* Para garantir que se ajuste em telas menores */
+  gap: 20px; /* Espaçamento entre os gráficos */
+  margin-top: 20px; /* Margem para afastar da parte superior */
+}
+
+/* Estilizando cada gráfico individualmente */
+.chartItem {
+  flex: 1 1 45%; /* Cada gráfico ocupará 45% do contêiner e se ajustará */
+  max-width: 600px; /* Largura máxima */
+  min-width: 300px; /* Largura mínima para manter a responsividade */
+}
+
+/* Comentado: Partes para ajuste de altura e largura */
+
+/* Definir altura máxima dos gráficos */
+.chartItem canvas {
+  max-height: 200px; /* Define uma altura máxima */
+}
+
+/* Definir largura máxima dos gráficos */
+.chartItem {
+  max-width: 550px; /* Limite para a largura máxima */
+  width: 100%; /* Permite que o gráfico use 100% da largura disponível */
+}
+
+/* Mudar posição (alinhar ao centro, por exemplo) */
+.chartWrapper {
+  justify-content: center; /* Centraliza os gráficos */
 }

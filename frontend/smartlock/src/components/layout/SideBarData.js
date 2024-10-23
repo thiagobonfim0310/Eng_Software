@@ -36,10 +36,4 @@ export const SideBarData = [
     icon: <FiLock />, // Usa o ícone de cadeado
     cName: "side-text",
   },
-  {
-    title: "Perfil", // Novo item para o Perfil
-    path: "/perfil",
-    icon: <FaUser />, // Usa o ícone de usuário
-    cName: "side-text",
-  },
 ];
